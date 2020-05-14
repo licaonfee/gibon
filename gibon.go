@@ -10,9 +10,8 @@ type Chain struct {
 	mid []Middleware
 }
 
-func Add(m Middleware) Chain {
-	c := Chain{}
-	return c.Add(m)
+func New() Chain {
+	return Chain{}
 }
 
 func (c Chain) Add(m Middleware) Chain {
