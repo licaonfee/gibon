@@ -23,6 +23,12 @@ func authMiddleware(next http.Handler) http.Handler {
 		http.Error(w, "Access Denied", http.StatusForbidden)
 	})
 }
+
+func redirectMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "Redirect", http.StatusPermanentRedirect)
+	})
+}
 func TestApplyMiddleware(t *testing.T) {
 	tests := []struct {
 		name        string
@@ -62,6 +68,28 @@ func TestApplyMiddleware(t *testing.T) {
 				return req
 			},
 			response: "Access Denied\n",
+		},
+		{
+			name:        "Rewrite Auth Forbidden",
+			middlewares: []gibon.Middleware{authMiddleware, redirectMiddleware},
+			code:        http.StatusForbidden,
+			request: func() *http.Request {
+				req, _ := http.NewRequest("GET", "/", nil)
+				req.SetBasicAuth("admin", "no valid")
+				return req
+			},
+			response: "Access Denied\n",
+		},
+		{
+			name:        "Rewrite Auth Success",
+			middlewares: []gibon.Middleware{authMiddleware, redirectMiddleware},
+			code:        http.StatusPermanentRedirect,
+			request: func() *http.Request {
+				req, _ := http.NewRequest("GET", "/", nil)
+				req.SetBasicAuth("admin", "admin")
+				return req
+			},
+			response: "Redirect\n",
 		},
 	}
 
