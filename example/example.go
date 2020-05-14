@@ -54,13 +54,13 @@ curl -vvv http://admin:XXXX@localhost:3000/secret
 
 func main() {
 
-	logRequest := gibon.Add(loggingMiddleware)
-	auth := logRequest.Add(authMiddleware)
+	logPipeline := gibon.Add(loggingMiddleware)
+	authPipeline := logPipeline.Add(authMiddleware)
 
-	http.Handle("/", logRequest.BuildFunc(index))
-	http.Handle("/priv", auth.BuildFunc(privateA))
-	http.Handle("/secret", auth.BuildFunc(privateB))
-	http.Handle("/public", logRequest.BuildFunc(public))
+	http.Handle("/", logPipeline.BuildFunc(index))
+	http.Handle("/priv", authPipeline.BuildFunc(privateA))
+	http.Handle("/secret", authPipeline.BuildFunc(privateB))
+	http.Handle("/public", logPipeline.BuildFunc(public))
 	if err := http.ListenAndServe("0.0.0.0:3000", nil); err != nil {
 		log.Println(err)
 	}
