@@ -1,3 +1,3 @@
 # gibon
 
-Chain your middlewares for http, see examples folder
+Chain your middlewares for http, see example folder
