@@ -4,6 +4,8 @@ import (
 	"net/http"
 )
 
+//Middleware is a function tom improve or extends
+//http.Hanlder functionality
 type Middleware func(http.Handler) http.Handler
 
 //Chain is a middleware pipeline

@@ -1,5 +1,10 @@
 # gibon
 
+![Run test](https://github.com/licaonfee/gibon/workflows/Run%20test/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/licaonfee/gibon/badge.svg?branch=master)](https://coveralls.io/github/licaonfee/gibon?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/licaonfee/gibon)](https://goreportcard.com/report/github.com/licaonfee/gibon)
+
+
 Create middleware pipelines for http, compatible with standard http library
 
 ## Example
