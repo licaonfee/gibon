@@ -54,8 +54,8 @@ curl -vvv http://admin:XXXX@localhost:3000/secret
 
 func main() {
 
-	logPipeline := gibon.New().Add(loggingMiddleware)
-	authPipeline := logPipeline.Add(authMiddleware)
+	logPipeline := gibon.New().With(loggingMiddleware)
+	authPipeline := logPipeline.With(authMiddleware)
 
 	http.Handle("/", logPipeline.BuildFunc(index))
 	http.Handle("/priv", authPipeline.BuildFunc(privateA))

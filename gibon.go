@@ -14,7 +14,7 @@ func New() Chain {
 	return Chain{}
 }
 
-func (c Chain) Add(m Middleware) Chain {
+func (c Chain) With(m Middleware) Chain {
 	nmid := make([]Middleware, len(c.mid))
 	copy(nmid, c.mid)
 	nmid = append(nmid, m)

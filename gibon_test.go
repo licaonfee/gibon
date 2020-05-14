@@ -99,7 +99,7 @@ func TestApplyMiddleware(t *testing.T) {
 			req := tt.request()
 			pipeline := gibon.New()
 			for i := 0; i < len(tt.middlewares); i++ {
-				pipeline = pipeline.Add(tt.middlewares[i])
+				pipeline = pipeline.With(tt.middlewares[i])
 			}
 			rr := httptest.NewRecorder()
 			handler := pipeline.BuildFunc(defaultHandler)
