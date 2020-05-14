@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/licaonfee/gibon"
 )
 
@@ -57,12 +56,11 @@ func main() {
 	logRequest := gibon.Add(loggingMiddleware)
 	auth := logRequest.Add(authMiddleware)
 
-	r := mux.NewRouter()
-	r.Handle("/", logRequest.Build(http.HandlerFunc(index)))
-	r.Handle("/priv", auth.Build(http.HandlerFunc(privateA)))
-	r.Handle("/secret", auth.Build(http.HandlerFunc(privateB)))
-	r.Handle("/public", logRequest.Build(http.HandlerFunc(public)))
-	if err := http.ListenAndServe("0.0.0.0:3000", r); err != nil {
+	http.Handle("/", logRequest.Build(http.HandlerFunc(index)))
+	http.Handle("/priv", auth.Build(http.HandlerFunc(privateA)))
+	http.Handle("/secret", auth.Build(http.HandlerFunc(privateB)))
+	http.Handle("/public", logRequest.Build(http.HandlerFunc(public)))
+	if err := http.ListenAndServe("0.0.0.0:3000", nil); err != nil {
 		log.Println(err)
 	}
 }
