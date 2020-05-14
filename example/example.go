@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -30,26 +31,26 @@ func authMiddleware(next http.Handler) http.Handler {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	return
+	fmt.Fprint(w, "Hello World")
 }
 
 func privateA(w http.ResponseWriter, r *http.Request) {
-	return
+	fmt.Fprint(w, "Confidential")
 }
+
 func privateB(w http.ResponseWriter, r *http.Request) {
-	return
+	fmt.Fprint(w, "Top Secret")
 }
 
 func public(w http.ResponseWriter, r *http.Request) {
-	return
+	fmt.Fprint(w, "Public Domain")
 }
 
 /* test with
-curl -vvv http://admin:pass1x23@localhost:3000/public
-curl -vvv http://admin:NOPASS1122@localhost:3000/public
+curl -vvv http://localhost:3000/index
+curl -vvv http://localhost:3000/public
 curl -vvv http://admin:pass123@localhost:3000/priv
-curl -vvv http://admin:pass1x23@localhost:3000/public
-curl -vvv http://admin:pass1x23@localhost:3000/priv
+curl -vvv http://admin:XXXX@localhost:3000/secret
 */
 
 func main() {
