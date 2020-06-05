@@ -106,7 +106,7 @@ func TestApplyMiddleware(t *testing.T) {
 			handler.ServeHTTP(rr, req)
 			if status := rr.Code; status != tt.code {
 				t.Errorf("handler returned wrong status code: got %v want %v",
-					status, http.StatusOK)
+					status, tt.code)
 			}
 			if rr.Body.String() != tt.response {
 				t.Errorf("handler returned unexpected body: got %v want %v", rr.Body.String(), tt.response)
